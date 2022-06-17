@@ -2,6 +2,7 @@
 
 * [Overview](#overview)
 * [Changes](#changes)
+* [Usage](#usage)
 * [Install](#install)
 * [Licence](#licence)
 * [Contact](#contact)
@@ -18,6 +19,8 @@ refining the profile with `aa-logprof`
 
 - Script now primarity consists of functions instead of nested if statements
 - Added functionality to specify the profiles you'd want to set to complain mode.
+
+## Usage
 
 Add values to the `complain_list` array from /etc/rc/apparmor.conf
 
