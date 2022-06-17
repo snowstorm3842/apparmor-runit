@@ -22,7 +22,7 @@ refining the profile with `aa-logprof`
 
 ## Usage
 
-Add values to the `complain_list` array from /etc/rc/apparmor.conf
+Add profiles to the `complain_list` array from /etc/rc/apparmor.conf
 
     #!/bin/bash
 
