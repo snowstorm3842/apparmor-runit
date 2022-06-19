@@ -16,29 +16,29 @@ _check_module() {
 }
 
 _check_aa_mode() {
-	if [[ $APPARMOR != complain && $APPARMOR != enforce ]]; then
-    	printhl "Unknown AppArmor mode - ignoring profiles"
+    if [[ $APPARMOR != complain && $APPARMOR != enforce ]]; then
+        printhl "Unknown AppArmor mode - ignoring profiles"
         stat_done apparmor
     fi
 }
 
 _parse_profiles() {
-	if [[ -d /etc/apparmor.d && -x /usr/bin/apparmor_parser ]]; then
-		for profile in /etc/apparmor.d/*; do
+    if [[ -d /etc/apparmor.d && -x /usr/bin/apparmor_parser ]]; then
+        for profile in /etc/apparmor.d/*; do
             if [[ ${complain_list[*]} == *${profile##*/}* ]]; then
-    			[[ ! -f ${profile} ]] && continue
-    			printf '* Load profile %s: %s\n' complain "$profile"
-    			apparmor_parser -a -C "/etc/apparmor.d/complain/${profile}"
+                [[ ! -f ${profile} ]] && continue
+                printf '* Load profile %s: %s\n' complain "$profile"
+                apparmor_parser -a -C "/etc/apparmor.d/complain/${profile}"
                 continue
             fi
-			[[ ! -f $profile ]] && continue
-			printf '* Load profile %s: %s\n' "$APPARMOR" "$profile"
-			apparmor_parser -a "$profile"
-		done
-		return
-	fi
-	printhl "AppArmor is not installed, aborting"
-	apparmor_parser -a "$profile"
+            [[ ! -f $profile ]] && continue
+            printf '* Load profile %s: %s\n' "$APPARMOR" "$profile"
+            apparmor_parser -a "$profile"
+        done
+    return
+    fi
+    printhl "AppArmor is not installed, aborting"
+    apparmor_parser -a "$profile"
 }
 
 [[ $1 == start ]] || _usage_and_exit
@@ -47,7 +47,7 @@ stat_busy "Loading AppArmor profiles"
 _check_module #or exit
 if [[ $APPARMOR ]]; then
     _check_aa_mode
-	_parse_profiles
+    _parse_profiles
 fi
 rc=$?
 (( rc || $? )) && stat_die apparmor
