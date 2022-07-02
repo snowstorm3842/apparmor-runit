@@ -25,12 +25,6 @@ _check_aa_mode() {
 _parse_profiles() {
     if [[ -d /etc/apparmor.d && -x /usr/bin/apparmor_parser ]]; then
         for profile in /etc/apparmor.d/*; do
-            if [[ ${complain_list[*]} == *${profile##*/}* ]]; then
-                [[ ! -f ${profile} ]] && continue
-                printf '* Load profile %s: %s\n' complain "$profile"
-                apparmor_parser -a -C "/etc/apparmor.d/complain/${profile}"
-                continue
-            fi
             [[ ! -f $profile ]] && continue
             printf '* Load profile %s: %s\n' "$APPARMOR" "$profile"
             apparmor_parser -a "$profile"
